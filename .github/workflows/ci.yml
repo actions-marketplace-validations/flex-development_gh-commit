@@ -62,16 +62,16 @@ jobs:
     steps:
       - id: debug
         name: Print environment variables and event payload
-        uses: hmarr/debug-action@v2.1.0
+        uses: hmarr/debug-action@v3.0.0
       - id: checkout
         name: Checkout ${{ env.REF_NAME }}
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v4.1.3
         with:
           persist-credentials: false
           ref: ${{ env.REF }}
       - id: node
         name: Setup Node.js
-        uses: actions/setup-node@v4.0.0
+        uses: actions/setup-node@v4.0.2
         with:
           cache: yarn
           cache-dependency-path: yarn.lock
@@ -86,7 +86,7 @@ jobs:
         run: echo "result=${{ runner.os }}-${{ github.run_id }}" >>$GITHUB_OUTPUT
       - id: cache
         name: Cache dependencies
-        uses: actions/cache@v3.3.2
+        uses: actions/cache@v4.0.2
         with:
           key: ${{ steps.cache-key.outputs.result }}
           path: ${{ env.CACHE_PATH }}
@@ -102,21 +102,21 @@ jobs:
     steps:
       - id: checkout
         name: Checkout ${{ env.REF_NAME }}
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v4.1.3
         with:
           fetch-depth: 0
           persist-credentials: false
           ref: ${{ env.REF }}
       - id: node
         name: Setup Node.js
-        uses: actions/setup-node@v4.0.0
+        uses: actions/setup-node@v4.0.2
         with:
           cache: yarn
           cache-dependency-path: yarn.lock
           node-version-file: .nvmrc
       - id: cache
         name: Restore dependencies cache
-        uses: actions/cache@v3.3.2
+        uses: actions/cache@v4.0.2
         with:
           key: ${{ needs.preflight.outputs.cache-key }}
           path: ${{ env.CACHE_PATH }}
@@ -130,7 +130,7 @@ jobs:
     steps:
       - id: checkout
         name: Checkout ${{ env.REF_NAME }}
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v4.1.3
         with:
           fetch-depth: 0
           persist-credentials: false
@@ -155,20 +155,20 @@ jobs:
     steps:
       - id: checkout
         name: Checkout ${{ env.REF_NAME }}
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v4.1.3
         with:
           persist-credentials: false
           ref: ${{ env.REF }}
       - id: node
         name: Setup Node.js
-        uses: actions/setup-node@v4.0.0
+        uses: actions/setup-node@v4.0.2
         with:
           cache: yarn
           cache-dependency-path: yarn.lock
           node-version-file: .nvmrc
       - id: cache
         name: Restore dependencies cache
-        uses: actions/cache@v3.3.2
+        uses: actions/cache@v4.0.2
         with:
           key: ${{ needs.preflight.outputs.cache-key }}
           path: ${{ env.CACHE_PATH }}
@@ -184,20 +184,20 @@ jobs:
     steps:
       - id: checkout
         name: Checkout ${{ env.REF_NAME }}
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v4.1.3
         with:
           persist-credentials: false
           ref: ${{ env.REF }}
       - id: node
         name: Setup Node.js
-        uses: actions/setup-node@v4.0.0
+        uses: actions/setup-node@v4.0.2
         with:
           cache: yarn
           cache-dependency-path: yarn.lock
           node-version-file: .nvmrc
       - id: cache
         name: Restore dependencies cache
-        uses: actions/cache@v3.3.2
+        uses: actions/cache@v4.0.2
         with:
           key: ${{ needs.preflight.outputs.cache-key }}
           path: ${{ env.CACHE_PATH }}
@@ -213,20 +213,20 @@ jobs:
     steps:
       - id: checkout
         name: Checkout ${{ env.REF_NAME }}
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v4.1.3
         with:
           persist-credentials: false
           ref: ${{ env.REF }}
       - id: node
         name: Setup Node.js
-        uses: actions/setup-node@v4.0.0
+        uses: actions/setup-node@v4.0.2
         with:
           cache: yarn
           cache-dependency-path: yarn.lock
           node-version-file: .nvmrc
       - id: cache
         name: Restore dependencies cache
-        uses: actions/cache@v3.3.2
+        uses: actions/cache@v4.0.2
         with:
           key: ${{ needs.preflight.outputs.cache-key }}
           path: ${{ env.CACHE_PATH }}
@@ -247,19 +247,19 @@ jobs:
     steps:
       - id: checkout
         name: Checkout ${{ env.REF_NAME }}
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v4.1.3
         with:
           persist-credentials: false
           ref: ${{ env.REF }}
       - id: test-files-check
         name: Check for typecheck files
-        uses: andstor/file-existence-action@v2.0.0
+        uses: andstor/file-existence-action@v3.0.0
         with:
           files: '**/__tests__/*.spec-d.ts'
       - id: node
         if: steps.test-files-check.outputs.files_exists == 'true'
         name: Setup Node.js
-        uses: actions/setup-node@v4.0.0
+        uses: actions/setup-node@v4.0.2
         with:
           cache: yarn
           cache-dependency-path: yarn.lock
@@ -267,7 +267,7 @@ jobs:
       - id: cache
         if: steps.test-files-check.outputs.files_exists == 'true'
         name: Restore dependencies cache
-        uses: actions/cache@v3.3.2
+        uses: actions/cache@v4.0.2
         with:
           key: ${{ needs.preflight.outputs.cache-key }}
           path: ${{ env.CACHE_PATH }}
@@ -299,18 +299,18 @@ jobs:
     steps:
       - id: checkout
         name: Checkout ${{ env.REF_NAME }}
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v4.1.3
         with:
           ref: ${{ env.REF }}
       - id: test-files-check
         name: Check for test files
-        uses: andstor/file-existence-action@v2.0.0
+        uses: andstor/file-existence-action@v3.0.0
         with:
           files: '**/__tests__/*.spec.+(ts|tsx)'
       - id: node
         if: steps.test-files-check.outputs.files_exists == 'true'
         name: Setup Node.js v${{ matrix.node-version }}
-        uses: actions/setup-node@v4.0.0
+        uses: actions/setup-node@v4.0.2
         with:
           cache: yarn
           cache-dependency-path: yarn.lock
@@ -319,7 +319,7 @@ jobs:
       - id: cache
         if: steps.test-files-check.outputs.files_exists == 'true'
         name: Restore dependencies cache
-        uses: actions/cache@v3.3.2
+        uses: actions/cache@v4.0.2
         with:
           key: ${{ needs.preflight.outputs.cache-key }}
           path: ${{ env.CACHE_PATH }}
@@ -330,7 +330,7 @@ jobs:
       - id: codecov
         name: Upload coverage report to Codecov
         if: steps.test-files-check.outputs.files_exists == 'true'
-        uses: codecov/codecov-action@v3.1.4
+        uses: codecov/codecov-action@v3.1.6
         with:
           env_vars: GITHUB_JOB,GITHUB_REF,GITHUB_REF_TYPE,GITHUB_RUN_ID,GITHUB_SHA,GITHUB_WORKSPACE
           fail_ci_if_error: true
@@ -360,20 +360,20 @@ jobs:
     steps:
       - id: checkout
         name: Checkout ${{ env.REF_NAME }}
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v4.1.3
         with:
           persist-credentials: false
           ref: ${{ env.REF }}
       - id: node
         name: Setup Node.js
-        uses: actions/setup-node@v4.0.0
+        uses: actions/setup-node@v4.0.2
         with:
           cache: yarn
           cache-dependency-path: yarn.lock
           node-version-file: .nvmrc
       - id: cache
         name: Restore dependencies cache
-        uses: actions/cache@v3.3.2
+        uses: actions/cache@v4.0.2
         with:
           key: ${{ needs.preflight.outputs.cache-key }}
           path: ${{ env.CACHE_PATH }}
@@ -385,7 +385,7 @@ jobs:
         run: yarn check:types:build
       - id: archive
         name: Archive production artifacts
-        uses: actions/upload-artifact@v3.1.3
+        uses: actions/upload-artifact@v4.3.1
         with:
           name: ${{ env.TARFILE }}
           path: ${{ env.TARFILE }}
@@ -406,21 +406,21 @@ jobs:
     steps:
       - id: checkout
         name: Checkout ${{ env.REF_NAME }}
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v4.1.3
         with:
           fetch-depth: 0
           persist-credentials: false
           ref: ${{ env.REF }}
       - id: node
         name: Setup Node.js
-        uses: actions/setup-node@v4.0.0
+        uses: actions/setup-node@v4.0.2
         with:
           cache: yarn
           cache-dependency-path: yarn.lock
           node-version-file: .nvmrc
       - id: cache
         name: Restore dependencies cache
-        uses: actions/cache@v3.3.2
+        uses: actions/cache@v4.0.2
         with:
           key: ${{ needs.preflight.outputs.cache-key }}
           path: ${{ env.CACHE_PATH }}
